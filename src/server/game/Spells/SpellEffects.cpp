@@ -3968,9 +3968,6 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
             // it requires additional tests - Searing Totem needs exception
             switch (m_spellInfo->Id)
             {
-                case 138121: // Storm, Earth and Fire
-                case 138122:
-                case 138123:
                 case 89765: // Decoy
                 {
                     summon = m_caster->GetMap()->SummonCreature(entry, *destTarget, properties, duration, m_originalCaster, m_spellInfo->Id, 0, m_targets.GetUnitTarget());
@@ -8667,6 +8664,19 @@ void Spell::EffectCreateAreatrigger(SpellEffIndex effIndex)
 
             break;
         }
+		case 123986: // Chi Burst
+		{
+			Position chiburstStarPos;
+			Position chiburstEndPos;
+			float distance;
+			m_caster->GetPosition(&chiburstStarPos);
+
+			m_caster->GetNearPosition(chiburstEndPos, 24.0f, 0.0f);
+			distance = chiburstStarPos.GetExactDist(&chiburstEndPos);
+
+			areaTrigger->MovePosition(chiburstEndPos, distance, m_caster->GetOrientation());
+			break;
+		}
         default:
             break;
     }
